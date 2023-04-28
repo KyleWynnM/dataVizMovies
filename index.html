@@ -1,45 +1,140 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Movie Stats Scatter Plot</title>
+<!DOCTYPE html><html><head>
+    <title>Movie Stats Scatter Plot Final Iteration</title>
     <script src="https://unpkg.com/d3@7.6.1/dist/d3.min.js"></script>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <div id="app"></div>
-    <div id="checkboxes"></div>
-      <input type="checkbox" id="action" name="action">
-      <label for="action">Action</label>
-      <input type="checkbox" id="adventure" name="adventure">
-      <label for="adventure">Adventure</label>
-      <input type="checkbox" id="animation" name="animation">
-      <label for="animation">Animation</label>
-      <input type="checkbox" id="biography" name="biography">
-      <label for="biography">Biography</label>
-      <input type="checkbox" id="comedy" name="comedy">
-      <label for="comedy">Comedy</label>
-      <input type="checkbox" id="crime" name="crime">
-      <label for="crime">Crime</label>
-      <input type="checkbox" id="drama" name="drama">
-      <label for="drama">Drama</label>
-      <input type="checkbox" id="family" name="family">
-      <label for="family">Family</label>
-      <input type="checkbox" id="fantasy" name="fantasy">
-      <label for="fantasy">Fantasy</label>
-      <input type="checkbox" id="history" name="history">
-      <label for="history">History</label>
-      <input type="checkbox" id="horror" name="horror">
-      <label for="horror">Horror</label>
-      <input type="checkbox" id="mystery" name="mystery">
-      <label for="mystery">Mystery</label>
-      <input type="checkbox" id="romance" name="romance">
-      <label for="romance">Romance</label>
-      <input type="checkbox" id="sci_fi" name="sci_fi">
-      <label for="sci_fi">Sci-Fi</label>
-      <input type="checkbox" id="thriller" name="thriller">
-      <label for="thriller">Thriller</label>
-      <div id="bitstring">000000000000000</div>
+    <h1>IMDB Movie Stats</h1>
+    <input type="radio" id="scatter_plot" name="graph_displayed" value="scatter_plot" checked>
+    <label for="scatter_plot">Scatter Plot</label><br>
+    <input type="radio" id="actor_network" name="graph_displayed" value="actor_network">
+    <label for="actor_network">Actor Network</label><br>
+    <div id="scatterPlot">
+    <button id="aboutBtn">about</button>
+
+  <!-- The Modal -->
+  <div id="about" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>Do critically acclaimed movies perform well at the box office? Does IMDB agree with Metacritic? Which genres are the best at the box office? Get your questions answered by the interactive scatter plot here!</p>
     </div>
-  </body>
-  <script src="bundle.js"></script>
-</html>
+  </div>
+  
+  <button id="howToBtn">how to</button>
+
+  <!-- The Modal -->
+  <div id="howTo" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>Click the checkboxes of genres you want to see displayed on the plot (some movies have multiple genres). If you want to see the filmography of a specific actor, click on the checkbox next to "search actor" and type in their name. Use the buttons below to set the X and Y axes for the plot.<br>Enjoy!</p>
+    </div>
+
+  </div>
+    <div id="app"></div>
+    <div id="current-movie"></div>
+    <label class="container">Search by actor
+      	<input type="checkbox" id="actor-search-checkbox">
+        <span class="checkmark"></span>
+    </label>
+    <input id="actor-search" /></br></br>
+    
+    <div id="checkboxes"></div>
+    	<label class="container">Action
+      	<input type="checkbox" class="checkbox" id="action" name="action">
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">Adventure
+    		<input type="checkbox" class="checkbox" id="adventure" name="adventure">
+      	<span class="checkmark"></span>
+      </label>
+    	<label class="container">Animation
+      	<input type="checkbox" class="checkbox" id="animation" name="animation">
+      	<span class="checkmark"></span>
+      </label>
+    	<label class="container">Biography
+      	<input type="checkbox" class="checkbox" id="biography" name="biography">
+      	<span class="checkmark"></span>
+      </label>
+    	<label class="container">Comedy
+      	<input type="checkbox" class="checkbox" id="comedy" name="comedy">
+      	<span class="checkmark"></span>
+      </label>
+    	<label class="container">Crime
+      	<input type="checkbox" class="checkbox" id="crime" name="crime">
+      	<span class="checkmark"></span>
+      </label>
+    	<label class="container">Drama
+      	<input type="checkbox" class="checkbox" id="drama" name="drama">
+      	<span class="checkmark"></span>
+      </label>
+    	<label class="container">Family
+      	<input type="checkbox" class="checkbox" id="family" name="family">
+      	<span class="checkmark"></span>
+      </label>
+    	<label class="container">Fantasy
+      	<input type="checkbox" class="checkbox" id="fantasy" name="fantasy">
+      	<span class="checkmark"></span>
+      </label>
+    	<label class="container">History
+      	<input type="checkbox" class="checkbox" id="history" name="history">
+      	<span class="checkmark"></span>
+      </label>
+    	<label class="container">Horror
+      	<input type="checkbox" class="checkbox" id="horror" name="horror">
+      	<span class="checkmark"></span>
+      </label>
+    	<label class="container">Mystery
+      	<input type="checkbox" class="checkbox" id="mystery" name="mystery">
+      	<span class="checkmark"></span>
+      </label>
+    	<label class="container">Romance
+      	<input type="checkbox" class="checkbox" id="romance" name="romance">
+      	<span class="checkmark"></span>
+      </label>
+    	<label class="container">Sci-fi
+      	<input type="checkbox" class="checkbox" id="sci_fi" name="sci_fi">
+      	<span class="checkmark"></span>
+      </label>
+    	<label class="container">Thriller
+      	<input type="checkbox" class="checkbox" id="thriller" name="thriller">
+      	<span class="checkmark"></span>
+      </label>
+    	
+    	<div id="x_axis_select">
+        <label for="xAxis">X Axis:</label>
+        <input type="radio" class="xAxis" id="year" name="xAxis" value="year">Year</input>
+        <input type="radio" class="xAxis" id="runtime" name="xAxis" value="runtime">Runtime</input>
+        <input type="radio" class="xAxis" id="imdb_rating" name="xAxis" value="imdb_rating" checked>IMDB Rating</input>
+        <input type="radio" class="xAxis" id="metascore" name="xAxis" value="metascore">Metascore</input>
+        <input type="radio" class="xAxis" id="num_votes" name="xAxis" value="num_votes">Num. Votes</input>
+        <input type="radio" class="xAxis" id="revenue" name="xAxis" value="revenue">Revenue</input>
+			</div>
+
+    	<div id="y_axis_select">
+        <label for="yAxis">Y Axis:</label>
+        <input type="radio" class="yAxis" id="year" name="yAxis" value="year">Year</input>
+        <input type="radio" class="yAxis" id="runtime" name="yAxis" value="runtime">Runtime</input>
+        <input type="radio" class="yAxis" id="imdb_rating" name="yAxis" value="imdb_rating">IMDB Rating</input>
+        <input type="radio" class="yAxis" id="metascore" name="yAxis" value="metascore">Metascore</input>
+        <input type="radio" class="yAxis" id="num_votes" name="yAxis" value="num_votes">Num. Votes</input>
+        <input type="radio" class="yAxis" id="revenue" name="yAxis" value="revenue" checked>Revenue</input>
+			</div>
+  
+<div id="bitstring" display="hidden">000000000000000</div>
+<div id="xAxisBitstring" display="hidden">000000</div>
+<div id="yAxisBitstring" display="hidden">000000</div>
+</div>
+<div id="graph">
+  
+  <label class="container">Actor Origin:
+      	<input type="checkbox" id="network-origin-checkbox">
+        <span class="checkmark"></span>
+	</label>
+	<input id="network-origin" /></br></br>
+</div>
+
+<script src="bundle.js"></script></body></html>

@@ -1,12 +1,12 @@
-import { csvParse, select } from 'd3';
+import { csvParse, select, selectAll } from 'd3';
 import { scatterPlot } from './scatterPlot';
 
 export const viz = (
   container,
   { state, setState, bitString }
 ) => {
-  const width = window.innerWidth - 100;
-  const height = window.innerHeight - 100;
+  const width = window.innerWidth;
+  const height = window.innerHeight - 50;
 
   const svg = select(container)
     .selectAll('svg')
@@ -19,17 +19,42 @@ export const viz = (
   // * undefined
   // * 'LOADING'
   // * An array of objects
-  const { data } = state;
+  const { data, hoveredValue } = state;
+
+  const setHoveredValue = (d) => {
+    setState((state) => ({
+      ...state,
+      hoveredValue: d,
+    }));
+    document.getElementById(
+      'current-movie'
+    ).innerHTML = d.Title;
+  };
 
   if (data && data !== 'LOADING') {
     svg.call(scatterPlot, {
       data,
       width,
       height,
-      xValue: (d) => d.Rating,
-      yValue: (d) => d.Revenue,
       genre: (d) => d.Genre,
-      bitString: document.getElementById("bitstring").innerHTML,
+      actors: (d) => d.Actors,
+      bitString: document.getElementById(
+        'bitstring'
+      ).innerHTML,
+      margin: {
+        top: 40,
+        right: 100,
+        bottom: 80,
+        left: 60,
+      },
+      xAxisSelection: document.getElementsByName(
+        'xAxis'
+      ),
+      yAxisSelection: document.getElementsByName(
+        'yAxis'
+      ),
+      setHoveredValue,
+      hoveredValue,
     });
   }
 
